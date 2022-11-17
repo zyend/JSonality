@@ -31,8 +31,8 @@
 						{value: 0, label: 'Dasher'},
 						{value: 0, label: 'Comet '},
 						{value: 0, label: 'Dancer'},
-						{value: 1, label: 'Snoopy'}
-						{value: 0, label: 'Prancer'},
+						{value: 1, label: 'Snoopy'},
+						{value: 0, label: 'Prancer'}
 					]
 				},
 				{
