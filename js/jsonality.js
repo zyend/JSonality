@@ -80,42 +80,43 @@
 
 		const Quiz = {
 			OutputCard(obj, index) {
-				if (!obj || !obj.hasOwnProperty('question')) return;
-				const uID = page + index;
-				let answers = obj.hasOwnProperty('answer') ? obj.answer : genericAnswer;
-				if ()
-
-				let optionHtml = answers.map((a) => {
+				if (!obj || !obj.hasOwnProperty("question")) return;
+				const uID = page +'-'+ index;
+				let answer = obj.hasOwnProperty("answer") ? obj.answer : genericAnswer;
+				let optionHtml = answer.map((a, i) =>{
 					let label = $(`<p><label for="${uID+i}"> ${a.label} </label></p>`)
 					let input = $(`<input type="radio" value="${a.value}" name="${uID}" id="${uID+i}">`).on("change", function () {
 						$(this).parents('fieldset').find("button").prop("disabled", false);
-					});
+					})
 					return label.prepend(input);
-				});
+				}
+				);
 
-				let btn = $('<button>Next</button>')
-					.prop('disabled', true)
-					.click(function () {
-						return Quiz.NextQuestion(index);
-					});
+				let btn = $("<button>Next</button>")
+					.prop("disabled", true)
+					.on('click', function(){ return Quiz.NextQuestion(index+1); });
 
-				let html = $(`<fieldset id="${uID}">` + `<h3>${index + 1}. ${obj.question}</h3>` + `</fieldset>`)
+				let html = $(
+					`<fieldset id="${uID}">` +
+						`<h3>${index + 1}. ${obj.question}</h3>` +
+						`</fieldset>`
+				)
 					.append(optionHtml)
-					.append(btn)
-					.slideUp();
+					.append(btn).slideUp();
 				return html;
 			},
 
 			CreateQuiz() {
+					qzHtml.push( Quiz.FirstFrame() );
 				$.each(quiz[testSet], function (index, value) {
 					qzHtml.push(Quiz.OutputCard(value, index));
 				});
-				$This.append(qzHtml[currentIndex].slideDown());
+				$This.append(qzHtml[0].slideDown());
 			},
 
 			NextQuestion(index) {
 				currentIndex = index + 1;
-				// console.log('currentIndex:', currentIndex, 'index:', index );
+				console.log('currentIndex:', currentIndex, 'index:', index );
 				if (index !== -1){
 					$(qzHtml[index]).slideUp();
 				}
@@ -128,9 +129,9 @@
 			},
 
 			FirstFrame(){
-				let btn = $("<button>Next</button>").click(function () {
+				let btn = $("<button>Go!</button>").on('click', function(){
 						return Quiz.NextQuestion(0);
-					});
+				});
 				let html = $(`<div><h1>Ready?</h1></div>`).append(btn);
 				return html;
 			},
@@ -143,7 +144,7 @@
 				const sum = answers.reduce((partial, a) => partial + a, 0);
 				console.log('Answers:', answers, 'Sum:', sum);
 
-				$This.append(`<h2>Right Answers: ${sum}</h2>`);
+				$This.append(`<h2>Right Answers: ${sum} / ${quiz[testSet].length}</h2>`);
 			},
 		};
 
