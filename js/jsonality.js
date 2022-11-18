@@ -56,7 +56,7 @@
 				{
 					question: 'What do people traditionally put on top of a Christmas tree?',
 					answer: [
-						{value: 0, label: 'Snow Flak'},
+						{value: 0, label: 'Snowflake'},
 						{value: 1, label: 'Angle'},
 						{value: 0, label: 'Star'},
 						{value: 0, label: 'Cross'}
